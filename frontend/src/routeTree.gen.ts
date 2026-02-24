@@ -9,38 +9,63 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as StyleguideRouteImport } from './routes/styleguide'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as StyleguideIndexRouteImport } from './routes/styleguide/index'
 
+const StyleguideRoute = StyleguideRouteImport.update({
+  id: '/styleguide',
+  path: '/styleguide',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const StyleguideIndexRoute = StyleguideIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => StyleguideRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/styleguide': typeof StyleguideRouteWithChildren
+  '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/styleguide': typeof StyleguideIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/styleguide': typeof StyleguideRouteWithChildren
+  '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/styleguide' | '/styleguide/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/styleguide'
+  id: '__root__' | '/' | '/styleguide' | '/styleguide/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  StyleguideRoute: typeof StyleguideRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/styleguide': {
+      id: '/styleguide'
+      path: '/styleguide'
+      fullPath: '/styleguide'
+      preLoaderRoute: typeof StyleguideRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,11 +73,31 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/styleguide/': {
+      id: '/styleguide/'
+      path: '/'
+      fullPath: '/styleguide/'
+      preLoaderRoute: typeof StyleguideIndexRouteImport
+      parentRoute: typeof StyleguideRoute
+    }
   }
 }
 
+interface StyleguideRouteChildren {
+  StyleguideIndexRoute: typeof StyleguideIndexRoute
+}
+
+const StyleguideRouteChildren: StyleguideRouteChildren = {
+  StyleguideIndexRoute: StyleguideIndexRoute,
+}
+
+const StyleguideRouteWithChildren = StyleguideRoute._addFileChildren(
+  StyleguideRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  StyleguideRoute: StyleguideRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
