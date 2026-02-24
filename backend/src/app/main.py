@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.api import accounts, categories, settings, transactions
+from app.api import users
 
 app = FastAPI(title="Financial Tracker API", version="0.1.0")
 
@@ -15,10 +15,7 @@ app.add_middleware(
 
 PREFIX = "/api"
 
-app.include_router(accounts.router, prefix=PREFIX)
-app.include_router(categories.router, prefix=PREFIX)
-app.include_router(transactions.router, prefix=PREFIX)
-app.include_router(settings.router, prefix=PREFIX)
+app.include_router(users.router, prefix=PREFIX)
 
 
 @app.get("/health")
