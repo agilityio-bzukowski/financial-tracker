@@ -1,18 +1,18 @@
-import { createFileRoute } from "@tanstack/react-router"
-import { Button } from "@/components/ui/button"
-import { Badge } from "@/components/ui/badge"
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert"
+import { Badge } from "@/components/ui/badge"
+import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Separator } from "@/components/ui/separator"
+import { createFileRoute } from "@tanstack/react-router"
 import {
+  Activity,
   AlertCircle,
   CheckCircle2,
+  DollarSign,
   Info,
+  TrendingUp,
   TriangleAlert,
   Zap,
-  TrendingUp,
-  DollarSign,
-  Activity,
 } from "lucide-react"
 
 export const Route = createFileRoute("/styleguide/")({
@@ -21,23 +21,23 @@ export const Route = createFileRoute("/styleguide/")({
 
 // ─── Color swatch data ──────────────────────────────────────────────────────
 
-const DRACULA_PALETTE = [
-  { name: "Cyan", hex: "#8be9fd", var: "--chart-1", cls: "bg-[#8be9fd]" },
-  { name: "Green", hex: "#50fa7b", var: "--chart-2", cls: "bg-[#50fa7b]" },
-  { name: "Purple", hex: "#bd93f9", var: "--chart-3", cls: "bg-[#bd93f9]" },
-  { name: "Pink", hex: "#ff79c6", var: "--chart-4", cls: "bg-[#ff79c6]" },
-  { name: "Orange", hex: "#ffb86c", var: "--chart-5", cls: "bg-[#ffb86c]" },
-  { name: "Red", hex: "#ff5555", var: "--destructive", cls: "bg-[#ff5555]" },
-  { name: "Yellow", hex: "#f1fa8c", var: "—", cls: "bg-[#f1fa8c]" },
+const CATPPUCCIN_PALETTE = [
+  { name: "Blue", hex: "#89b4fa", var: "--chart-1", cls: "bg-[#89b4fa]" },
+  { name: "Green", hex: "#a6e3a1", var: "--chart-2", cls: "bg-[#a6e3a1]" },
+  { name: "Mauve", hex: "#cba6f7", var: "--chart-3", cls: "bg-[#cba6f7]" },
+  { name: "Pink", hex: "#f5c2e7", var: "--chart-4", cls: "bg-[#f5c2e7]" },
+  { name: "Peach", hex: "#fab387", var: "--chart-5", cls: "bg-[#fab387]" },
+  { name: "Red", hex: "#f38ba8", var: "--destructive", cls: "bg-[#f38ba8]" },
+  { name: "Yellow", hex: "#f9e2af", var: "—", cls: "bg-[#f9e2af]" },
 ]
 
 const SURFACE_PALETTE = [
-  { name: "Sidebar", token: "--sidebar", cls: "bg-sidebar", hex: "#21222c" },
-  { name: "Background", token: "--background", cls: "bg-background", hex: "#282a36" },
-  { name: "Card", token: "--card", cls: "bg-card", hex: "#2f3140" },
-  { name: "Popover", token: "--popover", cls: "bg-popover", hex: "#343647" },
-  { name: "Secondary", token: "--secondary", cls: "bg-secondary", hex: "#44475a" },
-  { name: "Muted", token: "--muted", cls: "bg-muted", hex: "#2a2c3a" },
+  { name: "Sidebar", token: "--sidebar", cls: "bg-sidebar", hex: "#181825" },
+  { name: "Background", token: "--background", cls: "bg-background", hex: "#1e1e2e" },
+  { name: "Card", token: "--card", cls: "bg-card", hex: "#313244" },
+  { name: "Popover", token: "--popover", cls: "bg-popover", hex: "#45475a" },
+  { name: "Secondary", token: "--secondary", cls: "bg-secondary", hex: "#45475a" },
+  { name: "Muted", token: "--muted", cls: "bg-muted", hex: "#313244" },
 ]
 
 // ─── Section wrapper ─────────────────────────────────────────────────────────
@@ -179,7 +179,7 @@ function StyleguideTokensPage() {
         <div className="inline-flex items-center gap-2 rounded-full border border-primary/30 bg-primary/10 px-3 py-1 mb-4">
           <span className="h-1.5 w-1.5 rounded-full bg-primary animate-pulse" />
           <span className="font-mono text-[10px] text-primary uppercase tracking-widest">
-            Dracula Theme
+            Catppuccin Mocha
           </span>
         </div>
         <h1 className="font-mono text-4xl font-bold text-foreground tracking-tight leading-none">
@@ -187,16 +187,16 @@ function StyleguideTokensPage() {
         </h1>
         <p className="mt-3 text-muted-foreground max-w-xl">
           The complete token reference for the Financial Tracker design system,
-          built on the Dracula color palette with{" "}
+          built on the Catppuccin Mocha palette with{" "}
           <code className="text-primary text-sm">JetBrains Mono</code> +{" "}
           <span className="text-accent font-medium">Outfit</span>.
         </p>
       </div>
 
       {/* ── Chromatic palette ─────────────────────────────────────── */}
-      <Section title="Chromatic Palette" subtitle="The seven signature Dracula accent colors">
+      <Section title="Chromatic Palette" subtitle="The seven Catppuccin Mocha accent colors">
         <div className="grid grid-cols-7 gap-3">
-          {DRACULA_PALETTE.map((c) => (
+          {CATPPUCCIN_PALETTE.map((c) => (
             <Swatch
               key={c.name}
               label={c.name}
@@ -224,13 +224,13 @@ function StyleguideTokensPage() {
       </Section>
 
       {/* ── Semantic colors ───────────────────────────────────────── */}
-      <Section title="Semantic Colors" subtitle="Status and meaning — derived from the Dracula chromatic palette">
+      <Section title="Semantic Colors" subtitle="Status and meaning — derived from the Catppuccin Mocha palette">
         <div className="grid grid-cols-2 gap-3">
           <Alert className="border-primary/40 bg-primary/8">
             <Info className="h-4 w-4 text-primary" />
-            <AlertTitle className="text-primary text-sm font-semibold font-mono">Primary — Cyan</AlertTitle>
+            <AlertTitle className="text-primary text-sm font-semibold font-mono">Primary — Blue</AlertTitle>
             <AlertDescription className="text-muted-foreground text-xs">
-              <code>#8be9fd</code> · oklch(0.891 0.101 206) · Focus rings, CTAs, active states
+              <code>#89b4fa</code> · oklch(0.750 0.123 268) · Focus rings, CTAs, active states
             </AlertDescription>
           </Alert>
 
@@ -238,15 +238,15 @@ function StyleguideTokensPage() {
             <CheckCircle2 className="h-4 w-4 text-success" />
             <AlertTitle className="text-success text-sm font-semibold font-mono">Success — Green</AlertTitle>
             <AlertDescription className="text-muted-foreground text-xs">
-              <code>#50fa7b</code> · oklch(0.878 0.203 144) · Positive changes, confirmed states
+              <code>#a6e3a1</code> · oklch(0.860 0.094 147) · Positive changes, confirmed states
             </AlertDescription>
           </Alert>
 
           <Alert className="border-warning/40 bg-warning/8">
             <TriangleAlert className="h-4 w-4 text-warning" />
-            <AlertTitle className="text-warning text-sm font-semibold font-mono">Warning — Orange</AlertTitle>
+            <AlertTitle className="text-warning text-sm font-semibold font-mono">Warning — Peach</AlertTitle>
             <AlertDescription className="text-muted-foreground text-xs">
-              <code>#ffb86c</code> · oklch(0.806 0.161 62) · Caution, pending, attention needed
+              <code>#fab387</code> · oklch(0.786 0.110 58) · Caution, pending, attention needed
             </AlertDescription>
           </Alert>
 
@@ -254,7 +254,7 @@ function StyleguideTokensPage() {
             <AlertCircle className="h-4 w-4 text-destructive" />
             <AlertTitle className="text-destructive text-sm font-semibold font-mono">Destructive — Red</AlertTitle>
             <AlertDescription className="text-muted-foreground text-xs">
-              <code>#ff5555</code> · oklch(0.627 0.244 25) · Errors, deletions, irreversible actions
+              <code>#f38ba8</code> · oklch(0.724 0.132 10) · Errors, deletions, irreversible actions
             </AlertDescription>
           </Alert>
         </div>
@@ -282,7 +282,7 @@ function StyleguideTokensPage() {
           <TypeSpecimen
             family="JetBrains Mono"
             label="Label / Token"
-            sample="--color-primary: oklch(0.891 0.101 206)"
+            sample="--color-primary: oklch(0.750 0.123 268)"
             mono
             size="0.875rem"
             weight="400"
@@ -318,7 +318,7 @@ function StyleguideTokensPage() {
       </Section>
 
       {/* ── Buttons ───────────────────────────────────────────────── */}
-      <Section title="Buttons" subtitle="All shadcn/ui button variants using Dracula tokens">
+      <Section title="Buttons" subtitle="All shadcn/ui button variants using Catppuccin tokens">
         <div className="flex flex-wrap items-center gap-3">
           <Button>Default</Button>
           <Button variant="secondary">Secondary</Button>
@@ -436,14 +436,14 @@ function StyleguideTokensPage() {
       </Section>
 
       {/* ── Chart colors ──────────────────────────────────────────── */}
-      <Section title="Chart Colors" subtitle="Five visually distinct Dracula colors for data visualization">
+      <Section title="Chart Colors" subtitle="Five harmonious Catppuccin Mocha colors for data visualization">
         <div className="flex gap-3">
           {[
-            { label: "chart-1", cls: "bg-[--chart-1]", color: "#8be9fd", name: "Cyan" },
-            { label: "chart-2", cls: "bg-[--chart-2]", color: "#50fa7b", name: "Green" },
-            { label: "chart-3", cls: "bg-[--chart-3]", color: "#bd93f9", name: "Purple" },
-            { label: "chart-4", cls: "bg-[--chart-4]", color: "#ff79c6", name: "Pink" },
-            { label: "chart-5", cls: "bg-[--chart-5]", color: "#ffb86c", name: "Orange" },
+            { label: "chart-1", color: "#89b4fa", name: "Blue" },
+            { label: "chart-2", color: "#a6e3a1", name: "Green" },
+            { label: "chart-3", color: "#cba6f7", name: "Mauve" },
+            { label: "chart-4", color: "#f5c2e7", name: "Pink" },
+            { label: "chart-5", color: "#fab387", name: "Peach" },
           ].map((c) => (
             <div key={c.label} className="flex-1 flex flex-col items-center gap-2">
               <div
@@ -459,11 +459,11 @@ function StyleguideTokensPage() {
         </div>
         {/* Stacked bar preview */}
         <div className="mt-4 h-3 rounded-full overflow-hidden flex">
-          <div className="h-full flex-[3] bg-[#8be9fd]" />
-          <div className="h-full flex-[2] bg-[#50fa7b]" />
-          <div className="h-full flex-[1.5] bg-[#bd93f9]" />
-          <div className="h-full flex-[1] bg-[#ff79c6]" />
-          <div className="h-full flex-[0.8] bg-[#ffb86c]" />
+          <div className="h-full flex-[3] bg-[#89b4fa]" />
+          <div className="h-full flex-[2] bg-[#a6e3a1]" />
+          <div className="h-full flex-[1.5] bg-[#cba6f7]" />
+          <div className="h-full flex-[1] bg-[#f5c2e7]" />
+          <div className="h-full flex-[0.8] bg-[#fab387]" />
         </div>
       </Section>
 
@@ -473,14 +473,14 @@ function StyleguideTokensPage() {
           <CardContent className="pt-5">
             <div className="grid grid-cols-2 gap-x-10 gap-y-3 font-mono text-sm">
               {[
-                ["Primary color", "#8be9fd — Dracula Cyan"],
-                ["Accent color", "#bd93f9 — Dracula Purple"],
-                ["Background", "#282a36 — Dracula BG"],
+                ["Primary color", "#89b4fa — Mocha Blue"],
+                ["Accent color", "#cba6f7 — Mocha Mauve"],
+                ["Background", "#1e1e2e — Mocha Base"],
                 ["Display font", "JetBrains Mono"],
                 ["Body font", "Outfit"],
                 ["Border radius", "0.5rem (8px)"],
-                ["Style", "Terminal-dark, data-driven"],
-                ["Overall feel", "Developer-grade financial clarity"],
+                ["Style", "Soft-dark, readable, data-driven"],
+                ["Overall feel", "Comfortable clarity for long sessions"],
               ].map(([k, v]) => (
                 <div key={k} className="flex items-baseline gap-2">
                   <span className="text-muted-foreground text-xs shrink-0">{k}:</span>

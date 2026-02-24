@@ -12,6 +12,9 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as StyleguideIndexRouteImport } from './routes/styleguide/index'
+import { Route as StyleguideCardsRouteImport } from './routes/styleguide/cards'
+import { Route as StyleguideButtonsRouteImport } from './routes/styleguide/buttons'
+import { Route as StyleguideBadgesRouteImport } from './routes/styleguide/badges'
 
 const StyleguideRoute = StyleguideRouteImport.update({
   id: '/styleguide',
@@ -28,28 +31,70 @@ const StyleguideIndexRoute = StyleguideIndexRouteImport.update({
   path: '/',
   getParentRoute: () => StyleguideRoute,
 } as any)
+const StyleguideCardsRoute = StyleguideCardsRouteImport.update({
+  id: '/cards',
+  path: '/cards',
+  getParentRoute: () => StyleguideRoute,
+} as any)
+const StyleguideButtonsRoute = StyleguideButtonsRouteImport.update({
+  id: '/buttons',
+  path: '/buttons',
+  getParentRoute: () => StyleguideRoute,
+} as any)
+const StyleguideBadgesRoute = StyleguideBadgesRouteImport.update({
+  id: '/badges',
+  path: '/badges',
+  getParentRoute: () => StyleguideRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/styleguide/badges': typeof StyleguideBadgesRoute
+  '/styleguide/buttons': typeof StyleguideButtonsRoute
+  '/styleguide/cards': typeof StyleguideCardsRoute
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/styleguide/badges': typeof StyleguideBadgesRoute
+  '/styleguide/buttons': typeof StyleguideButtonsRoute
+  '/styleguide/cards': typeof StyleguideCardsRoute
   '/styleguide': typeof StyleguideIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/styleguide/badges': typeof StyleguideBadgesRoute
+  '/styleguide/buttons': typeof StyleguideButtonsRoute
+  '/styleguide/cards': typeof StyleguideCardsRoute
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/styleguide' | '/styleguide/'
+  fullPaths:
+    | '/'
+    | '/styleguide'
+    | '/styleguide/badges'
+    | '/styleguide/buttons'
+    | '/styleguide/cards'
+    | '/styleguide/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/styleguide'
-  id: '__root__' | '/' | '/styleguide' | '/styleguide/'
+  to:
+    | '/'
+    | '/styleguide/badges'
+    | '/styleguide/buttons'
+    | '/styleguide/cards'
+    | '/styleguide'
+  id:
+    | '__root__'
+    | '/'
+    | '/styleguide'
+    | '/styleguide/badges'
+    | '/styleguide/buttons'
+    | '/styleguide/cards'
+    | '/styleguide/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -80,14 +125,41 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyleguideIndexRouteImport
       parentRoute: typeof StyleguideRoute
     }
+    '/styleguide/cards': {
+      id: '/styleguide/cards'
+      path: '/cards'
+      fullPath: '/styleguide/cards'
+      preLoaderRoute: typeof StyleguideCardsRouteImport
+      parentRoute: typeof StyleguideRoute
+    }
+    '/styleguide/buttons': {
+      id: '/styleguide/buttons'
+      path: '/buttons'
+      fullPath: '/styleguide/buttons'
+      preLoaderRoute: typeof StyleguideButtonsRouteImport
+      parentRoute: typeof StyleguideRoute
+    }
+    '/styleguide/badges': {
+      id: '/styleguide/badges'
+      path: '/badges'
+      fullPath: '/styleguide/badges'
+      preLoaderRoute: typeof StyleguideBadgesRouteImport
+      parentRoute: typeof StyleguideRoute
+    }
   }
 }
 
 interface StyleguideRouteChildren {
+  StyleguideBadgesRoute: typeof StyleguideBadgesRoute
+  StyleguideButtonsRoute: typeof StyleguideButtonsRoute
+  StyleguideCardsRoute: typeof StyleguideCardsRoute
   StyleguideIndexRoute: typeof StyleguideIndexRoute
 }
 
 const StyleguideRouteChildren: StyleguideRouteChildren = {
+  StyleguideBadgesRoute: StyleguideBadgesRoute,
+  StyleguideButtonsRoute: StyleguideButtonsRoute,
+  StyleguideCardsRoute: StyleguideCardsRoute,
   StyleguideIndexRoute: StyleguideIndexRoute,
 }
 
