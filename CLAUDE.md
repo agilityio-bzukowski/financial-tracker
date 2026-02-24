@@ -43,6 +43,21 @@ make db-downgrade                        # roll back one migration
 
 ---
 
+# Frontend (`frontend/`)
+
+## Package Manager
+
+Always use **pnpm** — never use npm or yarn for the frontend.
+
+```bash
+pnpm install                # install dependencies
+pnpm add <package>          # add a runtime dependency
+pnpm add -D <package>       # add a dev-only dependency
+pnpm remove <package>       # remove a dependency
+```
+
+---
+
 # Backend (`backend/`)
 
 > All backend work lives in `backend/`. For full architecture details see [`docs/backend/ARCHITECTURE.md`](docs/backend/ARCHITECTURE.md).
