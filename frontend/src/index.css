@@ -83,73 +83,10 @@
    Pink:       #f5c2e7  →  oklch(0.844 0.075 325)
    ============================================================ */
 
+/* Catppuccin Latte — light mode (default :root) */
 :root {
     --radius: 0.5rem;
 
-    /* === BASE === */
-    --background: oklch(0.154 0.022 285);           /* #1e1e2e Mocha Base */
-    --foreground: oklch(0.854 0.020 281);           /* #cdd6f4 Mocha Text — soft lavender-white */
-
-    /* === CARD === */
-    --card: oklch(0.232 0.022 278);                 /* #313244 Surface0 — elevated surface */
-    --card-foreground: oklch(0.854 0.020 281);
-
-    /* === POPOVER / DROPDOWN === */
-    --popover: oklch(0.322 0.022 278);              /* #45475a Surface1 */
-    --popover-foreground: oklch(0.854 0.020 281);
-
-    /* === PRIMARY — Mocha Blue (#89b4fa) === */
-    --primary: oklch(0.750 0.123 268);
-    --primary-foreground: oklch(0.093 0.016 287);   /* Crust — dark for contrast on blue */
-
-    /* === SECONDARY — Surface1 (#45475a) === */
-    --secondary: oklch(0.322 0.022 278);
-    --secondary-foreground: oklch(0.854 0.020 281);
-
-    /* === MUTED === */
-    --muted: oklch(0.232 0.022 278);                /* Surface0 */
-    --muted-foreground: oklch(0.583 0.025 278);     /* #7f849c Overlay1 — readable at ~6:1 contrast */
-
-    /* === ACCENT — Mocha Mauve (#cba6f7) === */
-    --accent: oklch(0.752 0.140 308);
-    --accent-foreground: oklch(0.093 0.016 287);
-
-    /* === DESTRUCTIVE — Mocha Red (#f38ba8) === */
-    --destructive: oklch(0.724 0.132 10);
-
-    /* === BORDERS & INPUTS === */
-    --border: oklch(0.322 0.022 278);               /* Surface1 */
-    --input: oklch(0.232 0.022 278);                /* Surface0 */
-    --ring: oklch(0.750 0.123 268);                 /* Blue focus ring */
-
-    /* === CHART COLORS — Catppuccin pastel palette === */
-    --chart-1: oklch(0.750 0.123 268);              /* blue    #89b4fa */
-    --chart-2: oklch(0.860 0.094 147);              /* green   #a6e3a1 */
-    --chart-3: oklch(0.752 0.140 308);              /* mauve   #cba6f7 */
-    --chart-4: oklch(0.844 0.075 325);              /* pink    #f5c2e7 */
-    --chart-5: oklch(0.786 0.110 58);               /* peach   #fab387 */
-
-    /* === SIDEBAR (#181825 — Mantle, darkest surface) === */
-    --sidebar: oklch(0.125 0.020 286);
-    --sidebar-foreground: oklch(0.854 0.020 281);
-    --sidebar-primary: oklch(0.750 0.123 268);
-    --sidebar-primary-foreground: oklch(0.093 0.016 287);
-    --sidebar-accent: oklch(0.232 0.022 278);
-    --sidebar-accent-foreground: oklch(0.854 0.020 281);
-    --sidebar-border: oklch(0.232 0.022 278);
-    --sidebar-ring: oklch(0.750 0.123 268);
-
-    /* === SEMANTIC COLORS === */
-    --success: oklch(0.860 0.094 147);              /* #a6e3a1 Mocha Green — muted, easy on eyes */
-    --success-foreground: oklch(0.093 0.016 287);
-    --warning: oklch(0.786 0.110 58);               /* #fab387 Mocha Peach */
-    --warning-foreground: oklch(0.093 0.016 287);
-    --info: oklch(0.752 0.140 308);                 /* #cba6f7 Mocha Mauve */
-    --info-foreground: oklch(0.093 0.016 287);
-}
-
-/* Catppuccin Latte — light variant */
-.light {
     --background: oklch(0.944 0.008 262);           /* #eff1f5 Latte Base */
     --foreground: oklch(0.385 0.024 266);           /* #4c4f69 Latte Text */
     --card: oklch(0.919 0.009 261);                 /* #e6e9ef Latte Mantle */
@@ -176,12 +113,58 @@
     --sidebar-accent-foreground: oklch(0.385 0.024 266);
     --sidebar-border: oklch(0.726 0.015 261);
     --sidebar-ring: oklch(0.512 0.231 264);
+    --chart-1: oklch(0.512 0.231 264);              /* #1e66f5 Latte Blue */
+    --chart-2: oklch(0.594 0.155 148);              /* #40a02b Latte Green */
+    --chart-3: oklch(0.527 0.217 310);              /* #8839ef Latte Mauve */
+    --chart-4: oklch(0.658 0.188 333);              /* #ea76cb Latte Pink */
+    --chart-5: oklch(0.679 0.185 50);               /* #fe640b Latte Peach */
     --success: oklch(0.594 0.155 148);              /* #40a02b Latte Green */
     --success-foreground: oklch(0.944 0.008 262);
     --warning: oklch(0.679 0.185 50);               /* #fe640b Latte Peach */
     --warning-foreground: oklch(0.944 0.008 262);
     --info: oklch(0.527 0.217 310);                 /* #8839ef Latte Mauve */
     --info-foreground: oklch(0.944 0.008 262);
+}
+
+/* Catppuccin Mocha — dark mode */
+.dark {
+    --background: oklch(0.154 0.022 285);           /* #1e1e2e Mocha Base */
+    --foreground: oklch(0.854 0.020 281);           /* #cdd6f4 Mocha Text */
+    --card: oklch(0.232 0.022 278);                 /* #313244 Surface0 */
+    --card-foreground: oklch(0.854 0.020 281);
+    --popover: oklch(0.322 0.022 278);              /* #45475a Surface1 */
+    --popover-foreground: oklch(0.854 0.020 281);
+    --primary: oklch(0.750 0.123 268);              /* #89b4fa Mocha Blue */
+    --primary-foreground: oklch(0.093 0.016 287);   /* Crust */
+    --secondary: oklch(0.322 0.022 278);
+    --secondary-foreground: oklch(0.854 0.020 281);
+    --muted: oklch(0.232 0.022 278);
+    --muted-foreground: oklch(0.583 0.025 278);     /* #7f849c Overlay1 */
+    --accent: oklch(0.752 0.140 308);               /* #cba6f7 Mocha Mauve */
+    --accent-foreground: oklch(0.093 0.016 287);
+    --destructive: oklch(0.724 0.132 10);           /* #f38ba8 Mocha Red */
+    --border: oklch(0.322 0.022 278);
+    --input: oklch(0.232 0.022 278);
+    --ring: oklch(0.750 0.123 268);
+    --sidebar: oklch(0.125 0.020 286);              /* #181825 Mantle */
+    --sidebar-foreground: oklch(0.854 0.020 281);
+    --sidebar-primary: oklch(0.750 0.123 268);
+    --sidebar-primary-foreground: oklch(0.093 0.016 287);
+    --sidebar-accent: oklch(0.232 0.022 278);
+    --sidebar-accent-foreground: oklch(0.854 0.020 281);
+    --sidebar-border: oklch(0.232 0.022 278);
+    --sidebar-ring: oklch(0.750 0.123 268);
+    --chart-1: oklch(0.750 0.123 268);              /* blue    #89b4fa */
+    --chart-2: oklch(0.860 0.094 147);              /* green   #a6e3a1 */
+    --chart-3: oklch(0.752 0.140 308);              /* mauve   #cba6f7 */
+    --chart-4: oklch(0.844 0.075 325);              /* pink    #f5c2e7 */
+    --chart-5: oklch(0.786 0.110 58);               /* peach   #fab387 */
+    --success: oklch(0.860 0.094 147);              /* #a6e3a1 Mocha Green */
+    --success-foreground: oklch(0.093 0.016 287);
+    --warning: oklch(0.786 0.110 58);               /* #fab387 Mocha Peach */
+    --warning-foreground: oklch(0.093 0.016 287);
+    --info: oklch(0.752 0.140 308);                 /* #cba6f7 Mocha Mauve */
+    --info-foreground: oklch(0.093 0.016 287);
 }
 
 @layer base {

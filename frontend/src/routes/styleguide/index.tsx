@@ -384,7 +384,7 @@ function StyleguideTokensPage() {
         </div>
 
         {/* Feature card */}
-        <Card className="mt-4 border-primary/20 bg-gradient-to-br from-card to-primary/5">
+        <Card className="mt-4 border-primary/20 bg-linear-to-br from-card to-primary/5">
           <CardHeader>
             <div className="flex items-center justify-between">
               <CardTitle className="font-mono text-base text-foreground">
@@ -439,16 +439,16 @@ function StyleguideTokensPage() {
       <Section title="Chart Colors" subtitle="Five harmonious Catppuccin Mocha colors for data visualization">
         <div className="flex gap-3">
           {[
-            { label: "chart-1", color: "#89b4fa", name: "Blue" },
-            { label: "chart-2", color: "#a6e3a1", name: "Green" },
-            { label: "chart-3", color: "#cba6f7", name: "Mauve" },
-            { label: "chart-4", color: "#f5c2e7", name: "Pink" },
-            { label: "chart-5", color: "#fab387", name: "Peach" },
+            { label: "chart-1", var: "--chart-1", name: "Blue / Sapphire" },
+            { label: "chart-2", var: "--chart-2", name: "Green" },
+            { label: "chart-3", var: "--chart-3", name: "Mauve" },
+            { label: "chart-4", var: "--chart-4", name: "Pink" },
+            { label: "chart-5", var: "--chart-5", name: "Peach" },
           ].map((c) => (
             <div key={c.label} className="flex-1 flex flex-col items-center gap-2">
               <div
                 className="w-full rounded-md"
-                style={{ height: "48px", backgroundColor: c.color }}
+                style={{ height: "48px", backgroundColor: `var(${c.var})` }}
               />
               <div className="text-center">
                 <p className="font-mono text-[10px] text-muted-foreground">{c.label}</p>
@@ -459,17 +459,17 @@ function StyleguideTokensPage() {
         </div>
         {/* Stacked bar preview */}
         <div className="mt-4 h-3 rounded-full overflow-hidden flex">
-          <div className="h-full flex-[3] bg-[#89b4fa]" />
-          <div className="h-full flex-[2] bg-[#a6e3a1]" />
-          <div className="h-full flex-[1.5] bg-[#cba6f7]" />
-          <div className="h-full flex-[1] bg-[#f5c2e7]" />
-          <div className="h-full flex-[0.8] bg-[#fab387]" />
+          <div className="h-full flex-3 bg-[--chart-1]" />
+          <div className="h-full flex-2 bg-[--chart-2]" />
+          <div className="h-full flex-1.5 bg-[--chart-3]" />
+          <div className="h-full flex-1 bg-[--chart-4]" />
+          <div className="h-full flex-0.8 bg-[--chart-5]" />
         </div>
       </Section>
 
       {/* ── Design summary ────────────────────────────────────────── */}
       <Section title="Design Summary">
-        <Card className="border-accent/20 bg-gradient-to-br from-card via-card to-accent/5">
+        <Card className="border-accent/20 bg-linear-to-br from-card via-card to-accent/5">
           <CardContent className="pt-5">
             <div className="grid grid-cols-2 gap-x-10 gap-y-3 font-mono text-sm">
               {[

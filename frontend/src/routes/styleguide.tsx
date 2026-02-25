@@ -1,5 +1,7 @@
 import { createFileRoute, Link, Outlet, useRouterState } from "@tanstack/react-router"
 import { cn } from "@/lib/utils"
+import { Moon, Sun } from "lucide-react"
+import { useTheme } from "next-themes"
 
 export const Route = createFileRoute("/styleguide")({
   component: StyleguideLayout,
@@ -23,6 +25,8 @@ const NAV = [
 function StyleguideLayout() {
   const { location } = useRouterState()
   const pathname = location.pathname
+
+  const { theme, setTheme } = useTheme()
 
   return (
     <div className="flex min-h-screen bg-background">
@@ -87,11 +91,34 @@ function StyleguideLayout() {
           ))}
         </nav>
 
-        {/* Footer tag */}
-        <div className="px-5 py-4 border-t border-border">
-          <p className="font-mono text-[10px] text-muted-foreground">
-            Dracula Theme v1.0
-          </p>
+        {/* Footer — theme toggle */}
+        <div className="px-3 py-4 border-t border-border">
+          <div className="flex items-center gap-1 rounded-lg bg-sidebar-accent p-1">
+            <button
+              onClick={() => setTheme("dark")}
+              className={cn(
+                "flex flex-1 items-center justify-center gap-1.5 rounded-md py-1.5 transition-all duration-150",
+                theme === "dark"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              <Moon className="h-3 w-3 shrink-0" />
+              <span className="font-mono text-[10px] uppercase tracking-wider">Dark</span>
+            </button>
+            <button
+              onClick={() => setTheme("light")}
+              className={cn(
+                "flex flex-1 items-center justify-center gap-1.5 rounded-md py-1.5 transition-all duration-150",
+                theme === "light"
+                  ? "bg-background text-foreground shadow-sm"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              <Sun className="h-3 w-3 shrink-0" />
+              <span className="font-mono text-[10px] uppercase tracking-wider">Light</span>
+            </button>
+          </div>
         </div>
       </aside>
 

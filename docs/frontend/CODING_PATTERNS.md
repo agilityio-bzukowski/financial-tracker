@@ -844,6 +844,31 @@ import { cn } from "@/lib/utils"
 <div className={cn("rounded-lg border p-4", isActive && "border-primary bg-primary/5")} />
 ```
 
+### Prefer Tailwind v4 syntax
+
+This project uses Tailwind CSS v4. Always use the v4 canonical utility name — never fall back to v3 aliases.
+
+Key renames:
+
+| v3 (avoid)            | v4 (use)              |
+|-----------------------|-----------------------|
+| `bg-gradient-to-br`   | `bg-linear-to-br`     |
+| `bg-gradient-to-tr`   | `bg-linear-to-tr`     |
+| `bg-gradient-to-r`    | `bg-linear-to-r`      |
+| `shadow-sm`           | `shadow-xs`           |
+| `ring-offset-*`       | `outline-offset-*`    |
+
+### Prefer canonical Tailwind classes over arbitrary values
+
+Use the canonical class when Tailwind provides one — avoid arbitrary value syntax for values that have a direct equivalent.
+
+```tsx
+// ✅ Canonical
+<div className="flex-3" />
+```
+
+Never write `flex-[3]` when `flex-3` exists. This applies to any utility that accepts a numeric scale (`flex-*`, `order-*`, `col-span-*`, etc.). Reserve `[...]` for values with no canonical class (e.g. `w-[372px]`, `grid-cols-[1fr_2fr]`).
+
 ---
 
 ## 15. Error Handling
