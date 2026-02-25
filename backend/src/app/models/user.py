@@ -2,17 +2,13 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from pydantic import BaseModel, ConfigDict, field_validator
-
-from app.db.schema import TransactionType
+from pydantic import BaseModel, ConfigDict, EmailStr, field_validator
 
 
-class CategoryCreate(BaseModel):
+class UserCreate(BaseModel):
+    email: EmailStr
     name: str
-    type: TransactionType
-    color: Optional[str] = None
-    icon: Optional[str] = None
-    sort_order: float = 0.0
+    password: str
 
     @field_validator("name")
     @classmethod
@@ -22,12 +18,9 @@ class CategoryCreate(BaseModel):
         return v.strip()
 
 
-class CategoryUpdate(BaseModel):
+class UserUpdate(BaseModel):
+    email: Optional[EmailStr] = None
     name: Optional[str] = None
-    type: Optional[TransactionType] = None
-    color: Optional[str] = None
-    icon: Optional[str] = None
-    sort_order: Optional[float] = None
 
     @field_validator("name")
     @classmethod
@@ -37,14 +30,11 @@ class CategoryUpdate(BaseModel):
         return v.strip() if v else v
 
 
-class CategoryResponse(BaseModel):
+class UserResponse(BaseModel):
     model_config = ConfigDict(from_attributes=True)
 
     id: uuid.UUID
+    email: str
     name: str
-    type: TransactionType
-    color: Optional[str]
-    icon: Optional[str]
-    sort_order: float
     created_at: datetime
     updated_at: datetime
