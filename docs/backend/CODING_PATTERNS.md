@@ -141,6 +141,7 @@ class AccountResponse(BaseModel):
 - Always include `model_config = ConfigDict(from_attributes=True)`.
 - Always include `id`, `created_at`, `updated_at`.
 - Nest related `*Response` models for eager-loaded relationships (see transactions example below).
+- **One response model per endpoint.** Never reuse a response model across endpoints that return different data. Each endpoint's response represents a distinct use case and must have its own model — even if fields partially overlap.
 
 ### Nested responses (for relationships)
 
@@ -463,6 +464,24 @@ Each layer owns exactly one concern. Never let concerns bleed across layers.
 | `db/schema.py` | Describe persistence structure | Contain validation or business rules |
 
 If a service method is doing two distinct things, split it into two methods.
+
+**Response models are also single-responsibility.** Each response model serves exactly one endpoint. Reusing a model across endpoints with different data needs couples them — a change to one endpoint's response would silently affect the other.
+
+```python
+# Wrong: reusing LoginResponse for register (different data needs)
+@router.post("/register", response_model=LoginResponse)
+def register(body: RegisterRequest, ...): ...
+
+@router.post("/login", response_model=LoginResponse)
+def login(body: LoginRequest, ...): ...
+
+# Correct: each endpoint has its own response model
+@router.post("/register", response_model=RegisterResponse)   # includes user info + token
+def register(body: RegisterRequest, ...): ...
+
+@router.post("/login", response_model=LoginResponse)          # token only
+def login(body: LoginRequest, ...): ...
+```
 
 ### O — Open/Closed
 

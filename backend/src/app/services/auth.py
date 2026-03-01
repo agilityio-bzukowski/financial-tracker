@@ -4,13 +4,14 @@ from app.models.auth import (
     LoginRequest,
     LoginResponse,
     RegisterRequest,
+    RegisterResponse,
 )
 from app.services.base import BaseService
 from fastapi import HTTPException, status
 
 
 class AuthService(BaseService):
-    def register(self, body: RegisterRequest) -> User:
+    def register(self, body: RegisterRequest) -> RegisterResponse:
         existing = self.session.query(User).filter(User.email == body.email).first()
         if existing:
             raise HTTPException(
@@ -25,7 +26,10 @@ class AuthService(BaseService):
         self.session.add(user)
         self.session.commit()
         self.session.refresh(user)
-        return user
+        return RegisterResponse(
+            access_token=create_access_token(user.id),
+            user=user,
+        )
 
     def login(self, body: LoginRequest) -> LoginResponse:
         user = self.session.query(User).filter(User.email == body.email).first()

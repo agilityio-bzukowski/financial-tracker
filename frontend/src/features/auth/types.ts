@@ -14,6 +14,12 @@ export interface LoginResponse {
   token_type: string
 }
 
+export interface RegisterResponse {
+  access_token: string
+  token_type: string
+  user: UserResponse
+}
+
 export interface UserResponse {
   id: string
   email: string

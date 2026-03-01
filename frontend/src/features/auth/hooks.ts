@@ -7,8 +7,9 @@ export function useRegister() {
   const router = useRouter()
   return useMutation({
     mutationFn: (body: RegisterRequest) => authApi.register(body),
-    onSuccess: () => {
-      router.navigate({ to: "/auth/login" })
+    onSuccess: (data) => {
+      localStorage.setItem("token", data.access_token)
+      router.navigate({ to: "/" })
     },
   })
 }

@@ -3,12 +3,12 @@ import type {
   LoginRequest,
   LoginResponse,
   RegisterRequest,
-  UserResponse,
+  RegisterResponse,
 } from "./types"
 
 export const authApi = {
-  register(body: RegisterRequest): Promise<UserResponse> {
-    return apiClient.post<UserResponse>("/auth/register", body).then((r) => r.data)
+  register(body: RegisterRequest): Promise<RegisterResponse> {
+    return apiClient.post<RegisterResponse>("/auth/register", body).then((r) => r.data)
   },
 
   login(body: LoginRequest): Promise<LoginResponse> {

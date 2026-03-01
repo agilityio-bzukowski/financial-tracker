@@ -1,3 +1,4 @@
+from app.models.user import UserResponse
 from pydantic import BaseModel, EmailStr, field_validator
 
 
@@ -29,5 +30,11 @@ class LoginRequest(BaseModel):
 class LoginResponse(BaseModel):
     access_token: str
     token_type: str = "bearer"
+
+
+class RegisterResponse(BaseModel):
+    access_token: str
+    token_type: str = "bearer"
+    user: UserResponse
 
 

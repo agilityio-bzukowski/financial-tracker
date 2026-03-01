@@ -33,10 +33,12 @@ def test_register_success(client_with_test_db):
     resp = _register(client_with_test_db)
     assert resp.status_code == 201
     data = resp.json()
-    assert data["email"] == "alice@example.com"
-    assert data["name"] == "Alice"
-    assert "id" in data
-    assert "hashed_password" not in data
+    assert "access_token" in data
+    assert data["token_type"] == "bearer"
+    assert data["user"]["email"] == "alice@example.com"
+    assert data["user"]["name"] == "Alice"
+    assert "id" in data["user"]
+    assert "hashed_password" not in data["user"]
 
 
 def test_register_duplicate_email(client_with_test_db):
