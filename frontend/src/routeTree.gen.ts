@@ -10,26 +10,33 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as StyleguideRouteImport } from './routes/styleguide'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteImport } from './routes/_authenticated'
 import { Route as StyleguideIndexRouteImport } from './routes/styleguide/index'
+import { Route as AuthenticatedIndexRouteImport } from './routes/_authenticated/index'
 import { Route as StyleguideCardsRouteImport } from './routes/styleguide/cards'
 import { Route as StyleguideButtonsRouteImport } from './routes/styleguide/buttons'
 import { Route as StyleguideBadgesRouteImport } from './routes/styleguide/badges'
+import { Route as AuthRegisterRouteImport } from './routes/auth/register'
+import { Route as AuthLoginRouteImport } from './routes/auth/login'
 
 const StyleguideRoute = StyleguideRouteImport.update({
   id: '/styleguide',
   path: '/styleguide',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
+const AuthenticatedRoute = AuthenticatedRouteImport.update({
+  id: '/_authenticated',
   getParentRoute: () => rootRouteImport,
 } as any)
 const StyleguideIndexRoute = StyleguideIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => StyleguideRoute,
+} as any)
+const AuthenticatedIndexRoute = AuthenticatedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AuthenticatedRoute,
 } as any)
 const StyleguideCardsRoute = StyleguideCardsRouteImport.update({
   id: '/cards',
@@ -46,29 +53,46 @@ const StyleguideBadgesRoute = StyleguideBadgesRouteImport.update({
   path: '/badges',
   getParentRoute: () => StyleguideRoute,
 } as any)
+const AuthRegisterRoute = AuthRegisterRouteImport.update({
+  id: '/auth/register',
+  path: '/auth/register',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthLoginRoute = AuthLoginRouteImport.update({
+  id: '/auth/login',
+  path: '/auth/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/': typeof AuthenticatedIndexRoute
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
   '/styleguide/buttons': typeof StyleguideButtonsRoute
   '/styleguide/cards': typeof StyleguideCardsRoute
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
   '/styleguide/buttons': typeof StyleguideButtonsRoute
   '/styleguide/cards': typeof StyleguideCardsRoute
+  '/': typeof AuthenticatedIndexRoute
   '/styleguide': typeof StyleguideIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/auth/login': typeof AuthLoginRoute
+  '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
   '/styleguide/buttons': typeof StyleguideButtonsRoute
   '/styleguide/cards': typeof StyleguideCardsRoute
+  '/_authenticated/': typeof AuthenticatedIndexRoute
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRouteTypes {
@@ -76,30 +100,39 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/styleguide'
+    | '/auth/login'
+    | '/auth/register'
     | '/styleguide/badges'
     | '/styleguide/buttons'
     | '/styleguide/cards'
     | '/styleguide/'
   fileRoutesByTo: FileRoutesByTo
   to:
-    | '/'
+    | '/auth/login'
+    | '/auth/register'
     | '/styleguide/badges'
     | '/styleguide/buttons'
     | '/styleguide/cards'
+    | '/'
     | '/styleguide'
   id:
     | '__root__'
-    | '/'
+    | '/_authenticated'
     | '/styleguide'
+    | '/auth/login'
+    | '/auth/register'
     | '/styleguide/badges'
     | '/styleguide/buttons'
     | '/styleguide/cards'
+    | '/_authenticated/'
     | '/styleguide/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  AuthenticatedRoute: typeof AuthenticatedRouteWithChildren
   StyleguideRoute: typeof StyleguideRouteWithChildren
+  AuthLoginRoute: typeof AuthLoginRoute
+  AuthRegisterRoute: typeof AuthRegisterRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -111,11 +144,11 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyleguideRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof AuthenticatedRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/styleguide/': {
@@ -124,6 +157,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/styleguide/'
       preLoaderRoute: typeof StyleguideIndexRouteImport
       parentRoute: typeof StyleguideRoute
+    }
+    '/_authenticated/': {
+      id: '/_authenticated/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedIndexRouteImport
+      parentRoute: typeof AuthenticatedRoute
     }
     '/styleguide/cards': {
       id: '/styleguide/cards'
@@ -146,8 +186,34 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof StyleguideBadgesRouteImport
       parentRoute: typeof StyleguideRoute
     }
+    '/auth/register': {
+      id: '/auth/register'
+      path: '/auth/register'
+      fullPath: '/auth/register'
+      preLoaderRoute: typeof AuthRegisterRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/login': {
+      id: '/auth/login'
+      path: '/auth/login'
+      fullPath: '/auth/login'
+      preLoaderRoute: typeof AuthLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
+
+interface AuthenticatedRouteChildren {
+  AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
+}
+
+const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedIndexRoute: AuthenticatedIndexRoute,
+}
+
+const AuthenticatedRouteWithChildren = AuthenticatedRoute._addFileChildren(
+  AuthenticatedRouteChildren,
+)
 
 interface StyleguideRouteChildren {
   StyleguideBadgesRoute: typeof StyleguideBadgesRoute
@@ -168,8 +234,10 @@ const StyleguideRouteWithChildren = StyleguideRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  AuthenticatedRoute: AuthenticatedRouteWithChildren,
   StyleguideRoute: StyleguideRouteWithChildren,
+  AuthLoginRoute: AuthLoginRoute,
+  AuthRegisterRoute: AuthRegisterRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

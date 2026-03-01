@@ -144,7 +144,7 @@
     --accent-foreground: oklch(0.093 0.016 287);
     --destructive: oklch(0.724 0.132 10);           /* #f38ba8 Mocha Red */
     --border: oklch(0.322 0.022 278);
-    --input: oklch(0.232 0.022 278);
+    --input: oklch(0.380 0.022 278);
     --ring: oklch(0.750 0.123 268);
     --sidebar: oklch(0.125 0.020 286);              /* #181825 Mantle */
     --sidebar-foreground: oklch(0.854 0.020 281);

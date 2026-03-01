@@ -595,28 +595,66 @@ export const Route = createRootRoute({
 
 ## 12. Route Components (`routes/<resource>/index.tsx`)
 
-Routes are thin. Read params, render feature components. No data-fetching logic here.
+Route files contain the page component and route-level config (`beforeLoad`, `validateSearch`, `loader`). No data-fetching logic here.
+
+**Rule: Sub-components used by a page must live in `features/<resource>/components/`, not inside the route file.** The page component itself stays in the route file — what must not happen is defining reusable UI pieces (layout wrappers, banners, shared form fragments) inline in the route file, since they get duplicated across pages.
 
 ```tsx
-// routes/accounts/index.tsx
+// ✅ Correct — page component in route file, sub-components imported from features
 
-import { createFileRoute } from "@tanstack/react-router"
-import { AccountList } from "@/features/accounts/AccountList"
+// routes/auth/login.tsx
 
-export const Route = createFileRoute("/accounts/")({
-  component: AccountsPage,
+import { createFileRoute, redirect } from "@tanstack/react-router"
+import { useLogin } from "@/features/auth/hooks"
+import { AuthShell } from "@/features/auth/components/AuthShell"
+import { ErrorBanner } from "@/features/auth/components/ErrorBanner"
+import { AuthFooter } from "@/features/auth/components/AuthFooter"
+
+export const Route = createFileRoute("/auth/login")({
+  beforeLoad: () => {
+    if (localStorage.getItem("token")) throw redirect({ to: "/" })
+  },
+  component: LoginPage,
 })
 
-function AccountsPage() {
+function LoginPage() {
+  const login = useLogin()
+  // ...
   return (
-    <div className="p-6">
-      <AccountList />
-    </div>
+    <AuthShell>
+      {errorMessage && <ErrorBanner message={errorMessage} />}
+      {/* form */}
+      <AuthFooter>...</AuthFooter>
+    </AuthShell>
   )
 }
 ```
 
-For routes with path params:
+```tsx
+// ❌ Wrong — sub-components defined inline in the route file
+
+function LoginPage() { ... }
+
+// These belong in features/auth/components/, not here:
+function AuthShell({ children }) { ... }
+function ErrorBanner({ message }) { ... }
+function AuthFooter({ children }) { ... }
+```
+
+Sub-components shared across multiple pages in the same feature go in `features/<resource>/components/`:
+
+```
+features/auth/
+  components/
+    AuthShell.tsx      ← used by login, register, password-reset pages
+    ErrorBanner.tsx
+    AuthFooter.tsx
+  hooks.ts
+  api.ts
+  types.ts
+```
+
+For routes with path or search params, use `Route.useParams()` / `Route.useSearch()` inside the page component — there is no need to create a separate wrapper:
 
 ```tsx
 // routes/accounts/$accountId.tsx
