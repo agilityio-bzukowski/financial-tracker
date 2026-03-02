@@ -15,5 +15,8 @@ db-downgrade:
 test:
 	$(VENV)/pytest
 
+db-seed:
+	cd src && $(CURDIR)/$(VENV)/python -m app.db.seed
+
 install:
 	poetry install
