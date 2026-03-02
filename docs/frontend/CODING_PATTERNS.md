@@ -597,61 +597,78 @@ export const Route = createRootRoute({
 
 Route files contain the page component and route-level config (`beforeLoad`, `validateSearch`, `loader`). No data-fetching logic here.
 
-**Rule: Sub-components used by a page must live in `features/<resource>/components/`, not inside the route file.** The page component itself stays in the route file — what must not happen is defining reusable UI pieces (layout wrappers, banners, shared form fragments) inline in the route file, since they get duplicated across pages.
+Two rules govern the split between route files and feature components:
+
+**Rule 1 — Page components live in the route file, not in `features/`.** A page component is the top-level component a route renders. It owns layout (header, grid, spacing) and composes feature sub-components. It must be defined directly in the route file — never exported from `features/<resource>/components/` and re-imported.
+
+**Rule 2 — Sub-components live in `features/<resource>/components/`, not inline in the route file.** Reusable UI pieces (cards, tables, modals, forms, banners) belong in the feature directory so they can be shared across pages without duplication.
 
 ```tsx
-// ✅ Correct — page component in route file, sub-components imported from features
+// ✅ Correct — page defined in route file, sub-components imported from features
 
-// routes/auth/login.tsx
+// routes/_authenticated/index.tsx
 
-import { createFileRoute, redirect } from "@tanstack/react-router"
-import { useLogin } from "@/features/auth/hooks"
-import { AuthShell } from "@/features/auth/components/AuthShell"
-import { ErrorBanner } from "@/features/auth/components/ErrorBanner"
-import { AuthFooter } from "@/features/auth/components/AuthFooter"
+import { createFileRoute } from "@tanstack/react-router"
+import { StatCards } from "@/features/dashboard/components/StatCards"
+import { RecentTransactions } from "@/features/dashboard/components/RecentTransactions"
+import { SpendingByCategory } from "@/features/dashboard/components/SpendingByCategory"
 
-export const Route = createFileRoute("/auth/login")({
-  beforeLoad: () => {
-    if (localStorage.getItem("token")) throw redirect({ to: "/" })
-  },
-  component: LoginPage,
+export const Route = createFileRoute("/_authenticated/")({
+  component: DashboardPage,
 })
 
-function LoginPage() {
-  const login = useLogin()
-  // ...
+function DashboardPage() {
   return (
-    <AuthShell>
-      {errorMessage && <ErrorBanner message={errorMessage} />}
-      {/* form */}
-      <AuthFooter>...</AuthFooter>
-    </AuthShell>
+    <div className="space-y-6">
+      <div>
+        <h1 className="text-2xl font-semibold tracking-tight">Overview</h1>
+        <p className="mt-1 text-sm text-muted-foreground">March 2026</p>
+      </div>
+      <StatCards />
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-5">
+        <div className="lg:col-span-3"><RecentTransactions /></div>
+        <div className="lg:col-span-2"><SpendingByCategory /></div>
+      </div>
+    </div>
   )
 }
 ```
 
 ```tsx
-// ❌ Wrong — sub-components defined inline in the route file
+// ❌ Wrong — page component exported from features and re-imported into the route
 
-function LoginPage() { ... }
+// features/dashboard/components/Dashboard.tsx  ← should not exist as a "page"
+export default function Dashboard() {
+  return <div>...entire page layout...</div>
+}
 
-// These belong in features/auth/components/, not here:
-function AuthShell({ children }) { ... }
-function ErrorBanner({ message }) { ... }
-function AuthFooter({ children }) { ... }
+// routes/_authenticated/index.tsx
+import Dashboard from "@/features/dashboard/components/Dashboard"  // ❌
+export const Route = createFileRoute("/_authenticated/")({ component: Dashboard })
 ```
 
-Sub-components shared across multiple pages in the same feature go in `features/<resource>/components/`:
+```tsx
+// ❌ Also wrong — sub-components defined inline in the route file
+
+function DashboardPage() { ... }
+
+// These belong in features/dashboard/components/, not here:
+function StatCards() { ... }
+function RecentTransactions() { ... }
+```
+
+Feature directory structure — sub-components in `components/`, no page-level file:
 
 ```
-features/auth/
+features/dashboard/
   components/
-    AuthShell.tsx      ← used by login, register, password-reset pages
-    ErrorBanner.tsx
-    AuthFooter.tsx
-  hooks.ts
+    StatCards.tsx           ← sub-component, used by DashboardPage in the route
+    RecentTransactions.tsx
+    SpendingByCategory.tsx
+  data/
+    mockData.ts
   api.ts
-  types.ts
+  queries.ts
 ```
 
 For routes with path or search params, use `Route.useParams()` / `Route.useSearch()` inside the page component — there is no need to create a separate wrapper:
@@ -660,7 +677,7 @@ For routes with path or search params, use `Route.useParams()` / `Route.useSearc
 // routes/accounts/$accountId.tsx
 
 import { createFileRoute } from "@tanstack/react-router"
-import { AccountDetail } from "@/features/accounts/AccountDetail"
+import { AccountDetail } from "@/features/accounts/components/AccountDetail"
 
 export const Route = createFileRoute("/accounts/$accountId")({
   component: AccountDetailPage,

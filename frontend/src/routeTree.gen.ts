@@ -18,6 +18,7 @@ import { Route as StyleguideButtonsRouteImport } from './routes/styleguide/butto
 import { Route as StyleguideBadgesRouteImport } from './routes/styleguide/badges'
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
+import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
 
 const StyleguideRoute = StyleguideRouteImport.update({
   id: '/styleguide',
@@ -63,10 +64,17 @@ const AuthLoginRoute = AuthLoginRouteImport.update({
   path: '/auth/login',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedTransactionsRoute =
+  AuthenticatedTransactionsRouteImport.update({
+    id: '/transactions',
+    path: '/transactions',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
@@ -75,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRoutesByTo {
+  '/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
@@ -87,6 +96,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
   '/styleguide/badges': typeof StyleguideBadgesRoute
@@ -100,6 +110,7 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/styleguide'
+    | '/transactions'
     | '/auth/login'
     | '/auth/register'
     | '/styleguide/badges'
@@ -108,6 +119,7 @@ export interface FileRouteTypes {
     | '/styleguide/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/transactions'
     | '/auth/login'
     | '/auth/register'
     | '/styleguide/badges'
@@ -119,6 +131,7 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/styleguide'
+    | '/_authenticated/transactions'
     | '/auth/login'
     | '/auth/register'
     | '/styleguide/badges'
@@ -200,14 +213,23 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLoginRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated/transactions': {
+      id: '/_authenticated/transactions'
+      path: '/transactions'
+      fullPath: '/transactions'
+      preLoaderRoute: typeof AuthenticatedTransactionsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }
 

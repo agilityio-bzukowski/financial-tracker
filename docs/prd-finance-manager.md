@@ -24,66 +24,33 @@
 
 ---
 
-## F2 — Document Upload & Processing
+## F2 — Transaction Management
+
+> **Detailed PRD:** [`docs/prd-f2-transaction-management.md`](docs/prd-f2-transaction-management.md)
 
 **Back-end**
-- [ ] `POST /documents` — accept file upload, store in S3, enqueue Celery job, return `job_id`
-- [ ] `GET /documents` — list all documents with status and metadata
-- [ ] `GET /documents/{id}/status` — return current processing status
-- [ ] Celery worker: extract pages/image from PDF or screenshot
-- [ ] Celery worker: send file to LLM Vision API, parse structured transactions
-- [ ] Celery worker: validate output with Pydantic schema, persist to DB
-- [ ] Celery worker: update document status (`queued → processing → done / failed`)
-- [ ] Duplicate detection logic on transaction insert
-
-**Front-end**
-- [ ] File upload component (drag & drop + file picker, accept PDF/JPG/PNG)
-- [ ] Upload progress indicator
-- [ ] Processing status polling (React Query `refetchInterval` on `job_id`)
-- [ ] In-app notification when processing completes
-- [ ] Document history list (filename, date, status, # transactions)
-
----
-
-## F3 — Transaction Management
-
-**Back-end**
-- [ ] `GET /transactions` — paginated list with filters (date range, category, source document)
-- [ ] `PATCH /transactions/{id}` — update description, amount, date, or category
+- [ ] `POST /transactions` — create a transaction (income or expense)
+- [ ] `GET /transactions` — paginated list with filters (date range, category, type, search) and sorting
+- [ ] `GET /transactions/{id}` — single transaction by ID
+- [ ] `PATCH /transactions/{id}` — update description, amount, date, category, notes, recurring
 - [ ] `DELETE /transactions/{id}` — soft delete
-- [ ] `POST /transactions` — manually create a transaction
-- [ ] `GET /transactions/duplicates` — return flagged duplicate pairs
-
-**Front-end**
-- [ ] Transaction list page (sortable columns, pagination)
-- [ ] Filter bar (date range picker, category dropdown, source document)
-- [ ] Inline edit for description, amount, date, and category
-- [ ] Delete with 5s undo toast
-- [ ] Manual transaction form (modal or drawer)
-- [ ] Duplicate flags UI — confirm or dismiss per pair
-
----
-
-## F4 — Automatic Categorization
-
-**Back-end**
-- [ ] LLM-based categorization on transaction extraction (part of Celery worker)
-- [ ] Persist merchant→category mapping table
-- [ ] Apply saved mappings before LLM call on future imports
-- [ ] `GET /categories` — list all categories (default + custom)
+- [ ] `POST /transactions/{id}/restore` — undo soft delete
+- [ ] `GET /categories` — list all categories (system defaults + user custom)
 - [ ] `POST /categories` — create custom category
-- [ ] `PATCH /categories/{id}` — rename or update color
-- [ ] `DELETE /categories/{id}` — hide/remove custom category
+- [ ] `PATCH /categories/{id}` — update custom category name/color
+- [ ] `DELETE /categories/{id}` — delete custom category
 
 **Front-end**
-- [ ] Category dropdown in transaction list (inline update)
-- [ ] Category management page (list, add, rename, reorder, delete)
-- [ ] Color picker for custom categories
-- [ ] Default category set displayed on first use
+- [ ] Top navbar (logo, Transactions link, Dashboard disabled, user menu)
+- [ ] Transaction list page (sortable columns, page-number pagination, 10/page)
+- [ ] Filter bar (date range, category, type, search, clear filters)
+- [ ] Transaction modal (create & edit — click row to edit)
+- [ ] Delete with 5s undo toast (optimistic update + restore endpoint)
+- [ ] Inline category creation from transaction modal
 
 ---
 
-## F5 — Dashboard
+## F3 — Dashboard
 
 **Back-end**
 - [ ] `GET /analytics/summary` — total spent, income, net for a given period
@@ -104,7 +71,7 @@
 
 ---
 
-## F6 — Monthly Reports
+## F4 — Monthly Reports
 
 **Back-end**
 - [ ] Celery beat job — auto-generate monthly report on 1st of each month
@@ -121,7 +88,7 @@
 
 ---
 
-## F7 — Settings & Preferences
+## F5 — Settings & Preferences
 
 **Back-end**
 - [ ] `GET /users/me` — return user profile and preferences
@@ -131,3 +98,43 @@
 - [ ] Settings page
 - [ ] Currency selector
 - [ ] Email notification toggle
+
+---
+
+## F6 — Document Upload & Processing
+
+**Back-end**
+- [ ] `POST /documents` — accept file upload, store in S3, enqueue Celery job, return `job_id`
+- [ ] `GET /documents` — list all documents with status and metadata
+- [ ] `GET /documents/{id}/status` — return current processing status
+- [ ] Celery worker: extract pages/image from PDF or screenshot
+- [ ] Celery worker: send file to LLM Vision API, parse structured transactions
+- [ ] Celery worker: validate output with Pydantic schema, persist to DB
+- [ ] Celery worker: update document status (`queued → processing → done / failed`)
+- [ ] Duplicate detection logic on transaction insert
+
+**Front-end**
+- [ ] File upload component (drag & drop + file picker, accept PDF/JPG/PNG)
+- [ ] Upload progress indicator
+- [ ] Processing status polling (React Query `refetchInterval` on `job_id`)
+- [ ] In-app notification when processing completes
+- [ ] Document history list (filename, date, status, # transactions)
+
+---
+
+## F7 — Automatic Categorization
+
+**Back-end**
+- [ ] LLM-based categorization on transaction extraction (part of Celery worker)
+- [ ] Persist merchant→category mapping table
+- [ ] Apply saved mappings before LLM call on future imports
+- [ ] `GET /categories` — list all categories (default + custom)
+- [ ] `POST /categories` — create custom category
+- [ ] `PATCH /categories/{id}` — rename or update color
+- [ ] `DELETE /categories/{id}` — hide/remove custom category
+
+**Front-end**
+- [ ] Category dropdown in transaction list (inline update)
+- [ ] Category management page (list, add, rename, reorder, delete)
+- [ ] Color picker for custom categories
+- [ ] Default category set displayed on first use
