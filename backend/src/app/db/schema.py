@@ -71,6 +71,25 @@ class Category(Base):
 
 
 # ---------------------------------------------------------------------------
+# RecurringExpense
+# ---------------------------------------------------------------------------
+
+
+class RecurringExpense(Base):
+    __tablename__ = "recurring_expenses"
+
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"))
+    name: Mapped[str] = mapped_column(String(255))
+    amount: Mapped[float]
+    category_id: Mapped[Optional[uuid.UUID]] = mapped_column(ForeignKey("categories.id"))
+    due_day: Mapped[int]
+    notes: Mapped[Optional[str]] = mapped_column(Text)
+    deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
+
+    category: Mapped[Optional["Category"]] = relationship("Category")
+
+
+# ---------------------------------------------------------------------------
 # Transaction
 # ---------------------------------------------------------------------------
 
@@ -93,6 +112,10 @@ class Transaction(Base):
     recurrence_frequency: Mapped[Optional[RecurrenceFrequency]] = mapped_column(
         SAEnum(RecurrenceFrequency, name="recurrencefrequency")
     )
+    recurring_expense_id: Mapped[Optional[uuid.UUID]] = mapped_column(
+        ForeignKey("recurring_expenses.id")
+    )
+    billing_period: Mapped[Optional[str]] = mapped_column(String(7))
     deleted_at: Mapped[Optional[datetime]] = mapped_column(DateTime(timezone=True))
 
     category: Mapped[Optional["Category"]] = relationship(

@@ -19,6 +19,8 @@ import { Route as StyleguideBadgesRouteImport } from './routes/styleguide/badges
 import { Route as AuthRegisterRouteImport } from './routes/auth/register'
 import { Route as AuthLoginRouteImport } from './routes/auth/login'
 import { Route as AuthenticatedTransactionsRouteImport } from './routes/_authenticated/transactions'
+import { Route as AuthenticatedSettingsRouteImport } from './routes/_authenticated/settings'
+import { Route as AuthenticatedRecurringExpensesRouteImport } from './routes/_authenticated/recurring-expenses'
 
 const StyleguideRoute = StyleguideRouteImport.update({
   id: '/styleguide',
@@ -70,10 +72,23 @@ const AuthenticatedTransactionsRoute =
     path: '/transactions',
     getParentRoute: () => AuthenticatedRoute,
   } as any)
+const AuthenticatedSettingsRoute = AuthenticatedSettingsRouteImport.update({
+  id: '/settings',
+  path: '/settings',
+  getParentRoute: () => AuthenticatedRoute,
+} as any)
+const AuthenticatedRecurringExpensesRoute =
+  AuthenticatedRecurringExpensesRouteImport.update({
+    id: '/recurring-expenses',
+    path: '/recurring-expenses',
+    getParentRoute: () => AuthenticatedRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof AuthenticatedIndexRoute
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/recurring-expenses': typeof AuthenticatedRecurringExpensesRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -83,6 +98,8 @@ export interface FileRoutesByFullPath {
   '/styleguide/': typeof StyleguideIndexRoute
 }
 export interface FileRoutesByTo {
+  '/recurring-expenses': typeof AuthenticatedRecurringExpensesRoute
+  '/settings': typeof AuthenticatedSettingsRoute
   '/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -96,6 +113,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/_authenticated': typeof AuthenticatedRouteWithChildren
   '/styleguide': typeof StyleguideRouteWithChildren
+  '/_authenticated/recurring-expenses': typeof AuthenticatedRecurringExpensesRoute
+  '/_authenticated/settings': typeof AuthenticatedSettingsRoute
   '/_authenticated/transactions': typeof AuthenticatedTransactionsRoute
   '/auth/login': typeof AuthLoginRoute
   '/auth/register': typeof AuthRegisterRoute
@@ -110,6 +129,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/styleguide'
+    | '/recurring-expenses'
+    | '/settings'
     | '/transactions'
     | '/auth/login'
     | '/auth/register'
@@ -119,6 +140,8 @@ export interface FileRouteTypes {
     | '/styleguide/'
   fileRoutesByTo: FileRoutesByTo
   to:
+    | '/recurring-expenses'
+    | '/settings'
     | '/transactions'
     | '/auth/login'
     | '/auth/register'
@@ -131,6 +154,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/_authenticated'
     | '/styleguide'
+    | '/_authenticated/recurring-expenses'
+    | '/_authenticated/settings'
     | '/_authenticated/transactions'
     | '/auth/login'
     | '/auth/register'
@@ -220,15 +245,33 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedTransactionsRouteImport
       parentRoute: typeof AuthenticatedRoute
     }
+    '/_authenticated/settings': {
+      id: '/_authenticated/settings'
+      path: '/settings'
+      fullPath: '/settings'
+      preLoaderRoute: typeof AuthenticatedSettingsRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
+    '/_authenticated/recurring-expenses': {
+      id: '/_authenticated/recurring-expenses'
+      path: '/recurring-expenses'
+      fullPath: '/recurring-expenses'
+      preLoaderRoute: typeof AuthenticatedRecurringExpensesRouteImport
+      parentRoute: typeof AuthenticatedRoute
+    }
   }
 }
 
 interface AuthenticatedRouteChildren {
+  AuthenticatedRecurringExpensesRoute: typeof AuthenticatedRecurringExpensesRoute
+  AuthenticatedSettingsRoute: typeof AuthenticatedSettingsRoute
   AuthenticatedTransactionsRoute: typeof AuthenticatedTransactionsRoute
   AuthenticatedIndexRoute: typeof AuthenticatedIndexRoute
 }
 
 const AuthenticatedRouteChildren: AuthenticatedRouteChildren = {
+  AuthenticatedRecurringExpensesRoute: AuthenticatedRecurringExpensesRoute,
+  AuthenticatedSettingsRoute: AuthenticatedSettingsRoute,
   AuthenticatedTransactionsRoute: AuthenticatedTransactionsRoute,
   AuthenticatedIndexRoute: AuthenticatedIndexRoute,
 }

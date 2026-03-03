@@ -90,6 +90,8 @@ class TransactionResponse(BaseModel):
     notes: Optional[str]
     is_recurring: bool
     recurrence_frequency: Optional[RecurrenceFrequency]
+    recurring_expense_id: Optional[uuid.UUID]
+    billing_period: Optional[str]
     created_at: datetime
     updated_at: datetime
 

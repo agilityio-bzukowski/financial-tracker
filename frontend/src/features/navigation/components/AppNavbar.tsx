@@ -6,6 +6,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
+import { Switch } from "@/components/ui/switch"
 import { Link, useRouter, useRouterState } from "@tanstack/react-router"
 import {
   DollarSign,
@@ -13,9 +14,12 @@ import {
   LogOut,
   Menu,
   Receipt,
+  RefreshCw,
   Settings,
+  Sun,
   X,
 } from "lucide-react"
+import { useTheme } from "next-themes"
 import { useState } from "react"
 
 export function AppNavbar() {
@@ -23,6 +27,7 @@ export function AppNavbar() {
   const routerState = useRouterState()
   const currentPath = routerState.location.pathname
   const [mobileOpen, setMobileOpen] = useState(false)
+  const { resolvedTheme, setTheme } = useTheme()
 
   function handleLogout() {
     localStorage.removeItem("token")
@@ -31,6 +36,7 @@ export function AppNavbar() {
 
   const isTransactionsActive = currentPath.startsWith("/transactions")
   const isDashboardActive = currentPath === "/"
+  const isRecurringActive = currentPath.startsWith("/recurring-expenses")
 
   return (
     <nav className="border-b border-border bg-card">
@@ -66,6 +72,17 @@ export function AppNavbar() {
             </Link>
           </Button>
 
+          <Button
+            variant={isRecurringActive ? "secondary" : "ghost"}
+            size="sm"
+            asChild
+          >
+            <Link to="/recurring-expenses" className="gap-2">
+              <RefreshCw className="h-4 w-4" />
+              Recurring
+            </Link>
+          </Button>
+
         </div>
 
         {/* Right: User menu + mobile toggle */}
@@ -80,9 +97,20 @@ export function AppNavbar() {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="w-48">
-              <DropdownMenuItem disabled className="gap-2 opacity-50">
-                <Settings className="h-4 w-4" />
-                Settings
+              <DropdownMenuItem
+                className="gap-2"
+                onSelect={(e) => e.preventDefault()}
+                onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
+              >
+                <Sun className="h-4 w-4" />
+                <span className="flex-1">Dark mode</span>
+                <Switch checked={resolvedTheme === "dark"} />
+              </DropdownMenuItem>
+              <DropdownMenuItem asChild className="gap-2">
+                <Link to="/settings">
+                  <Settings className="h-4 w-4" />
+                  Settings
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={handleLogout} className="gap-2">
@@ -133,6 +161,18 @@ export function AppNavbar() {
             <Link to="/">
               <LayoutDashboard className="h-4 w-4" />
               Dashboard
+            </Link>
+          </Button>
+          <Button
+            variant={isRecurringActive ? "secondary" : "ghost"}
+            size="sm"
+            className="w-full justify-start gap-2"
+            asChild
+            onClick={() => setMobileOpen(false)}
+          >
+            <Link to="/recurring-expenses">
+              <RefreshCw className="h-4 w-4" />
+              Recurring
             </Link>
           </Button>
         </div>
