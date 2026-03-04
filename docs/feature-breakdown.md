@@ -53,22 +53,22 @@
 
 **Back-end**
 
-- [ ] `POST /recurring-expenses` — create a recurring expense (name, amount, category, due day of month, notes)
-- [ ] `GET /recurring-expenses` — list all recurring expenses with paid status for the current billing period
-- [ ] `GET /recurring-expenses/{id}` — single recurring expense by ID
-- [ ] `PATCH /recurring-expenses/{id}` — update name, amount, category, due day, notes
-- [ ] `DELETE /recurring-expenses/{id}` — delete a recurring expense
-- [ ] `POST /recurring-expenses/{id}/mark-paid` — mark as paid for current period; creates and returns a transaction
-- [ ] `POST /recurring-expenses/{id}/mark-unpaid` — undo paid status; soft-deletes the generated transaction
+- [x] `POST /recurring-expenses` — create a recurring expense (name, amount, category, due day of month, notes)
+- [x] `GET /recurring-expenses` — list all recurring expenses with paid status for the current billing period
+- [x] `GET /recurring-expenses/{id}` — single recurring expense by ID
+- [x] `PATCH /recurring-expenses/{id}` — update name, amount, category, due day, notes
+- [x] `DELETE /recurring-expenses/{id}` — delete a recurring expense
+- [x] `POST /recurring-expenses/{id}/mark-paid` — mark as paid for current period; creates and returns a transaction
+- [x] `POST /recurring-expenses/{id}/mark-unpaid` — undo paid status; soft-deletes the generated transaction
 
 **Front-end**
 
-- [ ] Recurring expenses page — card/list layout showing name, amount, category, due day, and paid status
-- [ ] Visual overdue indicator — highlight expenses past their due day that are still unpaid
-- [ ] "Mark as paid" toggle — one click marks paid and creates a transaction; second click reverts
-- [ ] Create/edit modal (name, amount, category, due day of month, optional notes)
-- [ ] Delete recurring expense with confirmation dialog
-- [ ] Monthly summary strip — total recurring committed vs. total paid this period
+- [x] Recurring expenses page — card/list layout showing name, amount, category, due day, and paid status
+- [x] Visual overdue indicator — highlight expenses past their due day that are still unpaid
+- [x] "Mark as paid" toggle — one click marks paid and creates a transaction; second click reverts
+- [x] Create/edit modal (name, amount, category, due day of month, optional notes)
+- [x] Delete recurring expense with confirmation dialog
+- [x] Monthly summary strip — total recurring committed vs. total paid this period
 
 ---
 
